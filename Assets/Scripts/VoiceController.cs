@@ -11,6 +11,8 @@ public class VoiceController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+
+		// Create
         keywords.Add("Create cube", () =>
         {
             this.BroadcastMessage("OnCreateCube");
@@ -21,6 +23,7 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnCreateSphere");
         });
 
+		// Delete
         keywords.Add("Delete all cubes", () =>
         {
             this.BroadcastMessage("OnDeleteAllCubes");
