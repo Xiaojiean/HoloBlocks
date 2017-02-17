@@ -17,6 +17,7 @@ Instructions on building the project:
 	    after this step.
 	(4) Set SDK to Universal 10
 	(5) Set Build Type to D3D
+	(6) Set Target device to HoloLens
 
 5. Specify the export for Windows Holographic:
 	(1) From the Build Settings... window, open Player Settings...
@@ -39,6 +40,7 @@ Instructions on building the project:
 
 7. Build and Deploy:
 	Refer to the instuctions in the following website to build and deploy onto the
-	HoloLens.
+	HoloLens. Make sure to enable Microphones under Package.appxmanifest > Capabilites.
 
 	https://developer.microsoft.com/en-us/windows/holographic/Using_Visual_Studio.html
+
