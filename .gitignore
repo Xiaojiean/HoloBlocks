@@ -1,0 +1,10 @@
+App
+WSATestCertificate.pfx
+WSATestCertificate.pfx.meta
+*.csproj
+*.sln
+*.userprefs
+Library
+UWP
+.vs
+
