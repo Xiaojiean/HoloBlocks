@@ -12,7 +12,6 @@ public class VoiceController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
         // Creation Commands
         keywords.Add("Create cube", () =>
         {

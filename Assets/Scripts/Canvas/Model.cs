@@ -4,50 +4,115 @@ using UnityEngine;
 
 public class Model : MonoBehaviour
 {
+    public class Mode
+    {
+        public virtual void Update() { }
+        public virtual void CreateGameObject(GameObject obj) { }
+        public virtual void DeleteAll(string tag) { }
+    }
+
+    public class CreateMode : Mode
+    {
+        public override void Update() { }
+
+        public override void CreateGameObject(GameObject obj)
+        {
+            var headPosition = Camera.main.transform.position;
+            var gazeDirection = Camera.main.transform.forward;
+
+            Instantiate(obj, headPosition + gazeDirection, obj.transform.rotation);
+        }
+
+        public override void DeleteAll(string tag)
+        {
+            GameObject[] elements = GameObject.FindGameObjectsWithTag(tag);
+            foreach (GameObject element in elements)
+            {
+                Destroy(element);
+            }
+        }
+    }
+
+    public class DragMode : Mode
+    {
+        private GameObject FocusedObject;
+        private float Offset;
+
+        public DragMode(GameObject focusedObject)
+        {
+            FocusedObject = focusedObject;
+        
+            var headPosition = Camera.main.transform.position;
+            var gazeDirection = Camera.main.transform.forward;
+
+            Vector3 offsetVector = Vector3.Project((focusedObject.transform.position - headPosition), gazeDirection);
+            Offset = offsetVector.magnitude;
+        }
+
+        public override void Update()
+        {
+            var headPosition = Camera.main.transform.position;
+            var gazeDirection = Camera.main.transform.forward;
+            FocusedObject.transform.position = headPosition + Offset * gazeDirection;
+        }
+
+        public override void CreateGameObject(GameObject obj) { }
+
+        public override void DeleteAll(string tag) { }
+    }
+
+    public Mode mode;
+
     public GameObject cube;
     public GameObject sphere;
 
-    private void CreateGameObject(GameObject obj)
+    // Use this for initialization
+    void Start()
     {
-        var headPosition = Camera.main.transform.position;
-        var gazeDirection = Camera.main.transform.forward;
-
-        Instantiate(obj, headPosition + gazeDirection, obj.transform.rotation);
+        mode = new CreateMode();
     }
 
-    private void deleteAll(string tag)
+    // Update is called once per frame
+    void Update()
     {
-        GameObject[] elements = GameObject.FindGameObjectsWithTag(tag);
-        foreach (GameObject element in elements)
-        {
-            Destroy(element);
-        }
+        mode.Update();
     }
 
     public void OnCreateCube()
     {
-        CreateGameObject(cube);
+        mode.CreateGameObject(cube);
     }
 
     public void OnCreateSphere()
     {
-        CreateGameObject(sphere);
+        mode.CreateGameObject(sphere);
     }
 
     public void OnDeleteAllCubes()
     {
-        deleteAll("Cube");
+        mode.DeleteAll("Cube");
     }
 
     public void OnDeleteAllSpheres()
     {
-        deleteAll("Sphere");
+        mode.DeleteAll("Sphere");
     }
 
     public void OnClearCanvas()
     {
-        deleteAll("Cube");
-        deleteAll("Sphere");
+        mode.DeleteAll("Cube");
+        mode.DeleteAll("Sphere");
     }
 
+    public void ToggleMode(GameObject focusedObject)
+    {
+        if (mode is CreateMode && (focusedObject != null))
+        {
+            mode = new DragMode(focusedObject);
+        }
+        else if (mode is DragMode)
+        {
+            mode = new CreateMode();
+        }
+    }
 }
