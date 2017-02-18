@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: 257d9e737e066c649acc1bfff16776e2
-timeCreated: 1487271660
+timeCreated: 1487393091
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cube: {fileID: 1462242965910982, guid: e7a9e7d71415f9640b94cc96d4c39515, type: 2}
+  - sphere: {fileID: 1746213304916494, guid: 898f7bd8797dac942b9ea4062aa83f0f, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
