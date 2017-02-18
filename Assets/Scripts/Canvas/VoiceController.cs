@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
+using UnityEngine.SceneManagement;
 
 public class VoiceController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class VoiceController : MonoBehaviour
     void Start ()
     {
 
-		// Create
+        // Creation Commands
         keywords.Add("Create cube", () =>
         {
             this.BroadcastMessage("OnCreateCube");
@@ -23,7 +24,7 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnCreateSphere");
         });
 
-		// Delete
+        // Deletion Commands
         keywords.Add("Delete all cubes", () =>
         {
             this.BroadcastMessage("OnDeleteAllCubes");
@@ -37,6 +38,12 @@ public class VoiceController : MonoBehaviour
         keywords.Add("Clear canvas", () =>
         {
             this.BroadcastMessage("OnClearCanvas");
+        });
+
+        // Menu Command
+        keywords.Add("Start menu", () =>
+        {
+            SceneManager.LoadScene("StartMenu");
         });
 
         // Tell the KeywordRecognizer about our keywords.
