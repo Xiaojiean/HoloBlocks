@@ -3,18 +3,14 @@ using UnityEngine.VR.WSA.Input;
 
 public class GazeGestureController : MonoBehaviour
 {
-    public static GazeGestureController Instance { get; private set; }
-
     // Represents the hologram that is currently being gazed at.
     public GameObject FocusedObject { get; private set; }
 
     GestureRecognizer recognizer;
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
-        Instance = this;
-
         // Set up a GestureRecognizer to detect Select gestures.
         recognizer = new GestureRecognizer();
         recognizer.TappedEvent += (source, tapCount, ray) =>
@@ -22,7 +18,7 @@ public class GazeGestureController : MonoBehaviour
             // Send an OnSelect message to the focused object and its ancestors.
             if (FocusedObject != null)
             {
-                FocusedObject.SendMessageUpwards("OnSelect");
+                OnTappedEvent();
             }
         };
         recognizer.StartCapturingGestures();
@@ -59,4 +55,6 @@ public class GazeGestureController : MonoBehaviour
             recognizer.StartCapturingGestures();
         }
     }
+
+    public virtual void OnTappedEvent() { }
 }
