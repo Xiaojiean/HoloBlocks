@@ -140,8 +140,9 @@ public class Model : MonoBehaviour
     public Mode mode;
 
     // Prefabs for GameObjects
-    public GameObject cube;
-    public GameObject sphere;
+    public GameObject Cube;
+    public GameObject Sphere;
+    public GameObject Cylinder;
  
     // Use this for initialization
     void Start()
@@ -157,12 +158,17 @@ public class Model : MonoBehaviour
 
     public void OnCreateCube()
     {
-        mode.CreateGameObject(cube);
+        mode.CreateGameObject(Cube);
     }
 
     public void OnCreateSphere()
     {
-        mode.CreateGameObject(sphere);
+        mode.CreateGameObject(Sphere);
+    }
+
+    public void OnCreateCylinder()
+    {
+        mode.CreateGameObject(Cylinder);
     }
 
     public void OnDelete(GameObject focusedObject)
@@ -180,10 +186,16 @@ public class Model : MonoBehaviour
         mode.DeleteAll("Sphere");
     }
 
+    public void OnDeleteAllCylinders()
+    {
+        mode.DeleteAll("Cylinder");
+    }
+
     public void OnClearCanvas()
     {
         mode.DeleteAll("Cube");
         mode.DeleteAll("Sphere");
+        mode.DeleteAll("Cylinder");
     }
 
     public void OnChangeColorToRed(GameObject focusedObject)
