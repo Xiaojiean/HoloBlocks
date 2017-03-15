@@ -144,6 +144,7 @@ public class Model : MonoBehaviour
     public GameObject Sphere;
     public GameObject Cylinder;
     public GameObject Pyramid;
+    public GameObject Slope;
  
     // Use this for initialization
     void Start()
@@ -177,6 +178,11 @@ public class Model : MonoBehaviour
         mode.CreateGameObject(Pyramid);
     }
 
+    public void OnCreateSlope()
+    {
+        mode.CreateGameObject(Slope);
+    }
+
     public void OnDelete(GameObject focusedObject)
     {
         mode.DeleteGameObject(focusedObject);
@@ -202,12 +208,18 @@ public class Model : MonoBehaviour
         mode.DeleteAll("Pyramid");
     }
 
+    public void OnDeleteAllSlopes()
+    {
+        mode.DeleteAll("Slope");
+    }
+
     public void OnClearCanvas()
     {
         mode.DeleteAll("Cube");
         mode.DeleteAll("Sphere");
         mode.DeleteAll("Cylinder");
         mode.DeleteAll("Pyramid");
+        mode.DeleteAll("Slope");
     }
 
     public void OnChangeColorToRed(GameObject focusedObject)
