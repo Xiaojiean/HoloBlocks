@@ -8,10 +8,14 @@ public class Model : MonoBehaviour
     {
         public virtual void Update() { }
         public virtual void CreateGameObject(GameObject obj) { }
+        public virtual void DeleteGameObject(GameObject obj) { }
         public virtual void DeleteAll(string tag) { }
+        public virtual void ChangeGameObjectColor(GameObject obj, Color color) { }
+        public virtual void IncreaseGameObjectSize(GameObject obj) { }
+        public virtual void DecreaseGameObjectSize(GameObject obj) { }
     }
 
-    public class CreateMode : Mode
+    public class StaticMode : Mode
     {
         public override void Update() { }
 
@@ -23,12 +27,42 @@ public class Model : MonoBehaviour
             Instantiate(obj, headPosition + gazeDirection, obj.transform.rotation);
         }
 
+        public override void DeleteGameObject(GameObject obj)
+        {
+            Destroy(obj);
+        }
+
         public override void DeleteAll(string tag)
         {
             GameObject[] elements = GameObject.FindGameObjectsWithTag(tag);
             foreach (GameObject element in elements)
             {
                 Destroy(element);
+            }
+        }
+
+        public override void ChangeGameObjectColor(GameObject obj, Color color)
+        {
+            obj.GetComponent<Renderer>().material.color = color;
+        }
+
+        public override void IncreaseGameObjectSize(GameObject obj)
+        {
+            if (obj.transform.localScale.x < 0.2 &&
+                obj.transform.localScale.y < 0.2 &&
+                obj.transform.localScale.z < 0.2)
+            {
+                obj.transform.localScale += new Vector3(0.05F, 0.05F, 0.05F);
+            }
+        }
+
+        public override void DecreaseGameObjectSize(GameObject obj)
+        {
+            if (obj.transform.localScale.x > 0.05 &&
+                obj.transform.localScale.y > 0.05 &&
+                obj.transform.localScale.z > 0.05)
+            {
+                obj.transform.localScale -= new Vector3(0.05F, 0.05F, 0.05F);
             }
         }
     }
@@ -41,7 +75,7 @@ public class Model : MonoBehaviour
         public DragMode(GameObject focusedObject)
         {
             FocusedObject = focusedObject;
-        
+
             var headPosition = Camera.main.transform.position;
             var gazeDirection = Camera.main.transform.forward;
 
@@ -57,19 +91,62 @@ public class Model : MonoBehaviour
         }
 
         public override void CreateGameObject(GameObject obj) { }
-
+        public override void DeleteGameObject(GameObject obj) { }
         public override void DeleteAll(string tag) { }
+        public override void ChangeGameObjectColor(GameObject obj, Color color) { }
+        public override void IncreaseGameObjectSize(GameObject obj) { }
+        public override void DecreaseGameObjectSize(GameObject obj) { }
+    }
+
+    public class RotateMode : Mode
+    {
+        public enum Direction { x, y, z };
+
+        private GameObject FocusedObject;
+        private Direction Axis;
+
+        public RotateMode(GameObject focusedObject, Direction axis)
+        {
+            FocusedObject = focusedObject;
+            Axis = axis;
+        }
+
+        public override void Update()
+        {
+            switch (Axis)
+            {
+                case Direction.x:
+                    FocusedObject.transform.Rotate(1, 0, 0);
+                    break;
+
+                case Direction.y:
+                    FocusedObject.transform.Rotate(0, 1, 0);
+                    break;
+
+                case Direction.z:
+                    FocusedObject.transform.Rotate(0, 0, 1);
+                    break;
+            }
+        }
+
+        public override void CreateGameObject(GameObject obj) { }
+        public override void DeleteGameObject(GameObject obj) { }
+        public override void DeleteAll(string tag) { }
+        public override void ChangeGameObjectColor(GameObject obj, Color color) { }
+        public override void IncreaseGameObjectSize(GameObject obj) { }
+        public override void DecreaseGameObjectSize(GameObject obj) { }
     }
 
     public Mode mode;
 
+    // Prefabs for GameObjects
     public GameObject cube;
     public GameObject sphere;
-
+ 
     // Use this for initialization
     void Start()
     {
-        mode = new CreateMode();
+        mode = new StaticMode();
     }
 
     // Update is called once per frame
@@ -88,6 +165,11 @@ public class Model : MonoBehaviour
         mode.CreateGameObject(sphere);
     }
 
+    public void OnDelete(GameObject focusedObject)
+    {
+        mode.DeleteGameObject(focusedObject);
+    }
+
     public void OnDeleteAllCubes()
     {
         mode.DeleteAll("Cube");
@@ -104,15 +186,70 @@ public class Model : MonoBehaviour
         mode.DeleteAll("Sphere");
     }
 
-    public void ToggleMode(GameObject focusedObject)
+    public void OnChangeColorToRed(GameObject focusedObject)
     {
-        if (mode is CreateMode && (focusedObject != null))
+        mode.ChangeGameObjectColor(focusedObject, Color.red);
+    }
+
+    public void OnChangeColorToYellow(GameObject focusedObject)
+    {
+        mode.ChangeGameObjectColor(focusedObject, Color.yellow);
+    }
+
+    public void OnChangeColorToBlue(GameObject focusedObject)
+    {
+        mode.ChangeGameObjectColor(focusedObject, Color.blue);
+    }
+
+    public void OnChangeColorToGreen(GameObject focusedObject)
+    {
+        mode.ChangeGameObjectColor(focusedObject, Color.green);
+    }
+
+    public void OnIncreaseGameObjectSize(GameObject focusedObject)
+    {
+        mode.IncreaseGameObjectSize(focusedObject);
+    }
+
+    public void OnDecreaseGameObjectSize(GameObject focusedObject)
+    {
+        mode.DecreaseGameObjectSize(focusedObject);
+    }
+
+    public void ChangeToStaticMode()
+    {
+        mode = new StaticMode();
+    }
+
+    public void ChangeToDragMode(GameObject focusedObject)
+    {
+        if (mode is StaticMode && (focusedObject != null))
         {
             mode = new DragMode(focusedObject);
         }
-        else if (mode is DragMode)
+    }
+
+    public void ChangeToRotateModeX(GameObject focusedObject)
+    {
+        if (mode is StaticMode && (focusedObject != null))
         {
-            mode = new CreateMode();
+            mode = new RotateMode(focusedObject, RotateMode.Direction.x);
+        }
+    }
+
+    public void ChangeToRotateModeY(GameObject focusedObject)
+    {
+        if (mode is StaticMode && (focusedObject != null))
+        {
+            mode = new RotateMode(focusedObject, RotateMode.Direction.y);
+        }
+    }
+
+    public void ChangeToRotateModeZ(GameObject focusedObject)
+    {
+        if (mode is StaticMode && (focusedObject != null))
+        {
+            mode = new RotateMode(focusedObject, RotateMode.Direction.z);
         }
     }
 }

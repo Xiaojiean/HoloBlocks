@@ -6,6 +6,6 @@ public class CanvasGazeGestureController : GazeGestureController
 {
     public override void OnTappedEvent()
     {
-        this.BroadcastMessage("ToggleMode", FocusedObject);
+        this.BroadcastMessage("ChangeToDragMode", FocusedObject);
     }
 }
