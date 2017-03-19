@@ -54,6 +54,36 @@ public class VoiceController : MonoBehaviour
         });
 
         // Deletion Commands
+        keywords.Add("Delete all cubes", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllCubes");
+        });
+
+        keywords.Add("Delete all spheres", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllSpheres");
+        });
+
+        keywords.Add("Delete all slopes", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllSlopes");
+        });
+
+        keywords.Add("Delete all ramps", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllSlopes");
+        });
+
+        keywords.Add("Delete all pyramids", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllPyramids");
+        });
+
+        keywords.Add("Delete all cylinders", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllCylinders");
+        });
+
         keywords.Add("Delete all blocks", () =>
         {
             this.BroadcastMessage("OnDeleteAllCubes");
