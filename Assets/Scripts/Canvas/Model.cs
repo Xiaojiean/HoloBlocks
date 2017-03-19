@@ -116,15 +116,15 @@ public class Model : MonoBehaviour
             switch (Axis)
             {
                 case Direction.x:
-                    FocusedObject.transform.Rotate(1, 0, 0);
+                    FocusedObject.transform.Rotate(60 * Time.deltaTime, 0, 0);
                     break;
 
                 case Direction.y:
-                    FocusedObject.transform.Rotate(0, 1, 0);
+                    FocusedObject.transform.Rotate(0, 60 * Time.deltaTime, 0);
                     break;
 
                 case Direction.z:
-                    FocusedObject.transform.Rotate(0, 0, 1);
+                    FocusedObject.transform.Rotate(0, 0, 60 * Time.deltaTime);
                     break;
             }
         }
