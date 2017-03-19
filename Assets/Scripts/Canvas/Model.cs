@@ -48,9 +48,9 @@ public class Model : MonoBehaviour
 
         public override void IncreaseGameObjectSize(GameObject obj)
         {
-            if (obj.transform.localScale.x < 0.2 &&
-                obj.transform.localScale.y < 0.2 &&
-                obj.transform.localScale.z < 0.2)
+            if (obj.transform.localScale.x < 0.175F &&
+                obj.transform.localScale.y < 0.175F &&
+                obj.transform.localScale.z < 0.175F)
             {
                 obj.transform.localScale += new Vector3(0.05F, 0.05F, 0.05F);
             }
@@ -58,11 +58,21 @@ public class Model : MonoBehaviour
 
         public override void DecreaseGameObjectSize(GameObject obj)
         {
-            if (obj.transform.localScale.x > 0.05 &&
-                obj.transform.localScale.y > 0.05 &&
-                obj.transform.localScale.z > 0.05)
+            if (obj.transform.localScale.x > 0.075F &&
+                obj.transform.localScale.y > 0.075F &&
+                obj.transform.localScale.z > 0.075F)
             {
+                Debug.Log("Original scale:");
+                Debug.Log(obj.transform.localScale.x);
+                Debug.Log(obj.transform.localScale.y);
+                Debug.Log(obj.transform.localScale.z);
+                Debug.Log("\n");
                 obj.transform.localScale -= new Vector3(0.05F, 0.05F, 0.05F);
+                Debug.Log("New scale:");
+                Debug.Log(obj.transform.localScale.x);
+                Debug.Log(obj.transform.localScale.y);
+                Debug.Log(obj.transform.localScale.z);
+                Debug.Log("\n\n");
             }
         }
     }
