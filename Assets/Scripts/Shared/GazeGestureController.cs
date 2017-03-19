@@ -4,7 +4,7 @@ using UnityEngine.VR.WSA.Input;
 public class GazeGestureController : MonoBehaviour
 {
     // Represents the hologram that is currently being gazed at.
-    public GameObject FocusedObject { get; private set; }
+    public static GameObject FocusedObject { get; private set; }
 
     GestureRecognizer recognizer;
 

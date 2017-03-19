@@ -288,4 +288,16 @@ public class Model : MonoBehaviour
             mode = new RotateMode(focusedObject, RotateMode.Direction.z);
         }
     }
+
+    public void ToggleStaticAndDragMode(GameObject focusedObject)
+    {
+        if (mode is StaticMode && (focusedObject != null))
+        {
+            mode = new DragMode(focusedObject);
+        }
+        else if (mode is DragMode)
+        {
+            mode = new StaticMode();
+        }
+    }
 }
