@@ -13,61 +13,61 @@ public class VoiceController : MonoBehaviour
     void Start()
     {
         // Creation Commands
-        keywords.Add("Block", () =>
+        keywords.Add("Make block", () =>
         {
             this.BroadcastMessage("OnCreateCube");
         });
 
-        keywords.Add("Ball", () =>
+        keywords.Add("Make ball", () =>
         {
             this.BroadcastMessage("OnCreateSphere");
         });
 
-        keywords.Add("Tube", () =>
+        keywords.Add("Make tube", () =>
         {
             this.BroadcastMessage("OnCreateCylinder");
         });
 
-        keywords.Add("Roof", () =>
+        keywords.Add("Make roof", () =>
         {
             this.BroadcastMessage("OnCreatePyramid");
         });
 
-        keywords.Add("Ramp", () =>
+        keywords.Add("Make ramp", () =>
         {
             this.BroadcastMessage("OnCreateSlope");
         });
 
         // Color Commands
-        keywords.Add("Red", () =>
+        keywords.Add("Color red", () =>
         {
-            this.BroadcastMessage("OnChangeColorToRed");
+            this.BroadcastMessage("OnChangeColorToRed", CanvasGazeGestureController.FocusedObject);
         });
 
-        keywords.Add("Blue", () =>
+        keywords.Add("Color blue", () =>
         {
-            this.BroadcastMessage("OnChangeColorToBlue");
+            this.BroadcastMessage("OnChangeColorToBlue", CanvasGazeGestureController.FocusedObject);
         });
 
-        keywords.Add("Green", () =>
+        keywords.Add("Color green", () =>
         {
-            this.BroadcastMessage("OnChangeColorToGreen");
+            this.BroadcastMessage("OnChangeColorToGreen", CanvasGazeGestureController.FocusedObject);
         });
 
-        keywords.Add("Yellow", () =>
+        keywords.Add("Color yellow", () =>
         {
-            this.BroadcastMessage("OnChangeColorToYellow");
+            this.BroadcastMessage("OnChangeColorToYellow", CanvasGazeGestureController.FocusedObject);
         });
 
         // Resize Commands
         keywords.Add("Bigger", () =>
         {
-            this.BroadcastMessage("OnIncreaseGameObjectSize");
+            this.BroadcastMessage("OnIncreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
         });
 
         keywords.Add("Smaller", () =>
         {
-            this.BroadcastMessage("OnDecreaseGameObjectSize");
+            this.BroadcastMessage("OnDecreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
         });
 
         // Deletion Commands
@@ -107,14 +107,14 @@ public class VoiceController : MonoBehaviour
         });
 
         // Spin Commands
-        keywords.Add("Spin", () =>
+        keywords.Add("Start spinning", () =>
         {
-            this.BroadcastMessage("ChangeToRotateModeY");
+            this.BroadcastMessage("ChangeToRotateModeY", CanvasGazeGestureController.FocusedObject);
         });
 
-        keywords.Add("Stop", () =>
+        keywords.Add("Stop spinning", () =>
         {
-            this.BroadcastMessage("OnChangeToStaticMode");
+            this.BroadcastMessage("ChangeToStaticMode");
         });
 
         // Menu Command
