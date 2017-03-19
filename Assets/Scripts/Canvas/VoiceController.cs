@@ -23,6 +23,74 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnCreateSphere");
         });
 
+        keywords.Add("Create block", () =>
+        {
+            this.BroadcastMessage("OnCreateCube");
+        });
+
+        keywords.Add("Create ball", () =>
+        {
+            this.BroadcastMessage("OnCreateSphere");
+        });
+
+        keywords.Add("Create ramp", () =>
+        {
+            this.BroadcastMessage("OnCreateRamp");
+        });
+
+        keywords.Add("Create slope", () =>
+        {
+            this.BroadcastMessage("OnCreateSlope");
+        });
+
+        keywords.Add("Create cylinder", () =>
+        {
+            this.BroadcastMessage("OnCreateCylinder");
+        });
+
+        keywords.Add("Create pyramid", () =>
+        {
+            this.BroadcastMessage("OnCreatePyramid");
+        });
+
+		// Spin Commands
+		keywords.Add("Start spin", () =>
+		{
+			this.BroadcastMessage("OnStartSpin");
+		});
+
+		keywords.Add("Stop spin", () =>
+		{
+			this.BroadcastMessage("OnStopSpin");
+		});
+
+		// Color Commands
+		keywords.Add("Red", () =>
+		{
+			this.BroadcastMessage("OnColorRed");
+		});
+
+		keywords.Add("Blue", () =>
+		{
+			this.BroadcastMessage("OnColorBlue");
+		});
+
+		keywords.Add("Green", () =>
+		{
+			this.BroadcastMessage("OnColorGreen");
+		});
+
+		// Resize Commands
+		keywords.Add("Bigger", () =>
+		{
+			this.BroadcastMessage("OnBigger");
+		});
+
+		keywords.Add("Smaller", () =>
+		{
+			this.BroadcastMessage("OnSmaller");
+		});
+
         // Deletion Commands
         keywords.Add("Delete all cubes", () =>
         {
@@ -30,6 +98,36 @@ public class VoiceController : MonoBehaviour
         });
 
         keywords.Add("Delete all spheres", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllSpheres");
+        });
+
+        keywords.Add("Delete all slopes", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllSlopes");
+        });
+
+        keywords.Add("Delete all ramps", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllSlopes");
+        });
+
+        keywords.Add("Delete all pyramids", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllPyramids");
+        });
+
+        keywords.Add("Delete all cylinders", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllCylinders");
+        });
+
+        keywords.Add("Delete all blocks", () =>
+        {
+            this.BroadcastMessage("OnDeleteAllCubes");
+        });
+
+        keywords.Add("Delete all balls", () =>
         {
             this.BroadcastMessage("OnDeleteAllSpheres");
         });
