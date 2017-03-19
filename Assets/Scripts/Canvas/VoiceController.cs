@@ -53,6 +53,44 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnCreatePyramid");
         });
 
+		// Spin Commands
+		keywords.Add("Start spin", () =>
+		{
+			this.BroadcastMessage("OnStartSpin");
+		});
+
+		keywords.Add("Stop spin", () =>
+		{
+			this.BroadcastMessage("OnStopSpin");
+		});
+
+		// Color Commands
+		keywords.Add("Red", () =>
+		{
+			this.BroadcastMessage("OnColorRed");
+		});
+
+		keywords.Add("Blue", () =>
+		{
+			this.BroadcastMessage("OnColorBlue");
+		});
+
+		keywords.Add("Green", () =>
+		{
+			this.BroadcastMessage("OnColorGreen");
+		});
+
+		// Resize Commands
+		keywords.Add("Bigger", () =>
+		{
+			this.BroadcastMessage("OnBigger");
+		});
+
+		keywords.Add("Smaller", () =>
+		{
+			this.BroadcastMessage("OnSmaller");
+		});
+
         // Deletion Commands
         keywords.Add("Delete all cubes", () =>
         {
