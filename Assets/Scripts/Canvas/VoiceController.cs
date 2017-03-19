@@ -59,6 +59,11 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnChangeColorToYellow", CanvasGazeGestureController.FocusedObject);
         });
 
+        keywords.Add("Color white", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToWhite", CanvasGazeGestureController.FocusedObject);
+        });
+
         // Resize Commands
         keywords.Add("Bigger", () =>
         {

@@ -242,6 +242,11 @@ public class Model : MonoBehaviour
         mode.ChangeGameObjectColor(focusedObject, Color.green);
     }
 
+    public void OnChangeColorToWhite(GameObject focusedObject)
+    {
+        mode.ChangeGameObjectColor(focusedObject, Color.white);
+    }
+
     public void OnIncreaseGameObjectSize(GameObject focusedObject)
     {
         mode.IncreaseGameObjectSize(focusedObject);
