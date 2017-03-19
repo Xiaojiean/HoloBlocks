@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 257d9e737e066c649acc1bfff16776e2
-timeCreated: 1489948273
+timeCreated: 1489950863
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -8,8 +8,8 @@ MonoImporter:
   - Cube: {fileID: 1462242965910982, guid: e7a9e7d71415f9640b94cc96d4c39515, type: 2}
   - Sphere: {fileID: 1746213304916494, guid: 898f7bd8797dac942b9ea4062aa83f0f, type: 2}
   - Cylinder: {fileID: 1249457105592804, guid: 603c87f422291984bae0d0d996a1cade, type: 2}
-  - Pyramid: {fileID: 1436309174797622, guid: 1ed88e6f5f022d24fa9df5429096b2d8, type: 2}
-  - Slope: {fileID: 1010568728351390, guid: 3354406fdaa730e44a36165342a1bac1, type: 2}
+  - Pyramid: {fileID: 1725088676828520, guid: 1d7e673f2185b7e48a633ad90ca9ac96, type: 2}
+  - Slope: {fileID: 1781153493074086, guid: 3371b487f9624c74e832c5c3dc4fe1dd, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
