@@ -23,13 +23,43 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnCreateSphere");
         });
 
+        keywords.Add("Create block", () =>
+        {
+            this.BroadcastMessage("OnCreateCube");
+        });
+
+        keywords.Add("Create ball", () =>
+        {
+            this.BroadcastMessage("OnCreateSphere");
+        });
+
+        keywords.Add("Create ramp", () =>
+        {
+            this.BroadcastMessage("OnCreateRamp");
+        });
+
+        keywords.Add("Create slope", () =>
+        {
+            this.BroadcastMessage("OnCreateSlope");
+        });
+
+        keywords.Add("Create cylinder", () =>
+        {
+            this.BroadcastMessage("OnCreateCylinder");
+        });
+
+        keywords.Add("Create pyramid", () =>
+        {
+            this.BroadcastMessage("OnCreatePyramid");
+        });
+
         // Deletion Commands
-        keywords.Add("Delete all cubes", () =>
+        keywords.Add("Delete all blocks", () =>
         {
             this.BroadcastMessage("OnDeleteAllCubes");
         });
 
-        keywords.Add("Delete all spheres", () =>
+        keywords.Add("Delete all balls", () =>
         {
             this.BroadcastMessage("OnDeleteAllSpheres");
         });
