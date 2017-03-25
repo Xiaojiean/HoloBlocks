@@ -13,6 +13,8 @@ public class Model : MonoBehaviour
         public virtual void ChangeGameObjectColor(GameObject obj, Color color) { }
         public virtual void IncreaseGameObjectSize(GameObject obj) { }
         public virtual void DecreaseGameObjectSize(GameObject obj) { }
+        public virtual void TurnObject(GameObject obj) { }
+        public virtual void FlipObject(GameObject obj) { }
         public virtual void TurnOnPhysics() { }
         public virtual void TurnOffPhysics() { }
     }
@@ -78,6 +80,16 @@ public class Model : MonoBehaviour
             }
         }
 
+        public override void TurnObject(GameObject obj)
+        {
+            obj.transform.Rotate(0, 45, 0);
+        }
+
+        public override void FlipObject(GameObject obj)
+        {
+            obj.transform.Rotate(0, 0, 45);
+        }
+
         public override void TurnOnPhysics()
         {
             GameObject[] objs = UnityEngine.Object.FindObjectsOfType<GameObject>();
@@ -138,9 +150,11 @@ public class Model : MonoBehaviour
         public override void ChangeGameObjectColor(GameObject obj, Color color) { }
         public override void IncreaseGameObjectSize(GameObject obj) { }
         public override void DecreaseGameObjectSize(GameObject obj) { }
+        public override void TurnObject(GameObject obj) { }
+        public override void FlipObject(GameObject obj) { }
     }
 
-    public class RotateMode : Mode
+/*    public class RotateMode : Mode
     {
         public enum Direction { x, y, z };
 
@@ -177,7 +191,7 @@ public class Model : MonoBehaviour
         public override void ChangeGameObjectColor(GameObject obj, Color color) { }
         public override void IncreaseGameObjectSize(GameObject obj) { }
         public override void DecreaseGameObjectSize(GameObject obj) { }
-    }
+    }*/
 
     public Mode mode;
 
@@ -299,6 +313,16 @@ public class Model : MonoBehaviour
         mode.DecreaseGameObjectSize(focusedObject);
     }
 
+    public void OnTurnObject(GameObject focusedObject)
+    {
+        mode.TurnObject(focusedObject);
+    }
+
+    public void OnFlipObject(GameObject focusedObject)
+    {
+        mode.FlipObject(focusedObject);
+    }
+
     public void ChangeToStaticMode()
     {
         mode = new StaticMode();
@@ -311,7 +335,7 @@ public class Model : MonoBehaviour
             mode = new DragMode(focusedObject);
         }
     }
-
+    /*
     public void ChangeToRotateModeX(GameObject focusedObject)
     {
         if (mode is StaticMode && (focusedObject != null))
@@ -334,7 +358,7 @@ public class Model : MonoBehaviour
         {
             mode = new RotateMode(focusedObject, RotateMode.Direction.z);
         }
-    }
+    }*/
 
     public void ToggleStaticAndDragMode(GameObject focusedObject)
     {
