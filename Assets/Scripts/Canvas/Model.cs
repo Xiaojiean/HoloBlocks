@@ -83,7 +83,7 @@ public class Model : MonoBehaviour
             GameObject[] objs = UnityEngine.Object.FindObjectsOfType<GameObject>();
             foreach (GameObject obj in objs)
             {
-                if (obj.tag != "Cursor")
+                if (obj.tag != "Untagged")
                 {
                     Rigidbody rb = obj.AddComponent<Rigidbody>();
                     rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
@@ -96,7 +96,7 @@ public class Model : MonoBehaviour
             GameObject[] objs = UnityEngine.Object.FindObjectsOfType<GameObject>();
             foreach (GameObject obj in objs)
             {
-                if (obj.tag != "Cursor")
+                if (obj.tag != "Untagged")
                 {
                     Rigidbody rb = obj.GetComponent<Rigidbody>();
                     if (rb)
