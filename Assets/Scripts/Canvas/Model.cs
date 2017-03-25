@@ -13,6 +13,8 @@ public class Model : MonoBehaviour
         public virtual void ChangeGameObjectColor(GameObject obj, Color color) { }
         public virtual void IncreaseGameObjectSize(GameObject obj) { }
         public virtual void DecreaseGameObjectSize(GameObject obj) { }
+        public virtual void TurnOnPhysics() { }
+        public virtual void TurnOffPhysics() { }
     }
 
     public class StaticMode : Mode
@@ -73,6 +75,36 @@ public class Model : MonoBehaviour
                 Debug.Log(obj.transform.localScale.y);
                 Debug.Log(obj.transform.localScale.z);
                 Debug.Log("\n\n");
+            }
+        }
+
+        public override void TurnOnPhysics()
+        {
+            GameObject[] objs = UnityEngine.Object.FindObjectsOfType<GameObject>();
+            foreach (GameObject obj in objs)
+            {
+                if (obj.tag != "Cursor")
+                {
+                    Rigidbody rb = obj.AddComponent<Rigidbody>();
+                    rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+                }
+            }
+        }
+
+        public override void TurnOffPhysics()
+        {
+            GameObject[] objs = UnityEngine.Object.FindObjectsOfType<GameObject>();
+            foreach (GameObject obj in objs)
+            {
+                if (obj.tag != "Cursor")
+                {
+                    Rigidbody rb = obj.GetComponent<Rigidbody>();
+                    if (rb)
+                    {
+                        rb.velocity = Vector3.zero;
+                        Destroy(rb);
+                    }
+                }
             }
         }
     }
@@ -155,7 +187,7 @@ public class Model : MonoBehaviour
     public GameObject Cylinder;
     public GameObject Pyramid;
     public GameObject Slope;
- 
+
     // Use this for initialization
     void Start()
     {
@@ -314,5 +346,15 @@ public class Model : MonoBehaviour
         {
             mode = new StaticMode();
         }
+    }
+
+    public void TurnOnPhysics()
+    {
+        mode.TurnOnPhysics();
+    }
+
+    public void TurnOffPhysics()
+    {
+        mode.TurnOffPhysics();
     }
 }

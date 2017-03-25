@@ -28,7 +28,7 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnCreateCylinder");
         });
 
-        keywords.Add("Make roof", () =>
+        keywords.Add("Make triangle", () =>
         {
             this.BroadcastMessage("OnCreatePyramid");
         });
@@ -96,7 +96,7 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnDeleteAllSlopes");
         });
 
-        keywords.Add("Erase roofs", () =>
+        keywords.Add("Erase triangles", () =>
         {
             this.BroadcastMessage("OnDeleteAllPyramids");
         });
@@ -120,6 +120,17 @@ public class VoiceController : MonoBehaviour
         keywords.Add("Stop spinning", () =>
         {
             this.BroadcastMessage("ChangeToStaticMode");
+        });
+
+        // Gravity Commands
+        keywords.Add("Gravity on", () =>
+        {
+            this.BroadcastMessage("TurnOnPhysics");
+        });
+
+        keywords.Add("Gravity off", () =>
+        {
+            this.BroadcastMessage("TurnOffPhysics");
         });
 
         // Menu Command
