@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+// TODO: Make sure that the cursor doesn't show up on the spactial mapping wire meshes.
+
 public class Cursor : MonoBehaviour
 {
     private MeshRenderer meshRenderer;
