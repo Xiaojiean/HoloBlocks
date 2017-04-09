@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Model : MonoBehaviour
 {
+
     public class Mode
     {
+        public static bool gravityOn = false;
+
         public virtual void Update() { }
         public virtual void CreateGameObject(GameObject obj) { }
         public virtual void DeleteGameObject(GameObject obj) { }
@@ -92,10 +95,11 @@ public class Model : MonoBehaviour
 
         public override void TurnOnPhysics()
         {
+            gravityOn = true;
             GameObject[] objs = UnityEngine.Object.FindObjectsOfType<GameObject>();
             foreach (GameObject obj in objs)
             {
-                if (obj.tag != "Untagged")
+                if (obj.tag == "Sphere" || obj.tag == "Cube" || obj.tag == "Pyramid" || obj.tag == "Slope" || obj.tag == "Cylinder")
                 {
                     Rigidbody rb = obj.AddComponent<Rigidbody>();
                     rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
@@ -105,10 +109,11 @@ public class Model : MonoBehaviour
 
         public override void TurnOffPhysics()
         {
+            gravityOn = false;
             GameObject[] objs = UnityEngine.Object.FindObjectsOfType<GameObject>();
             foreach (GameObject obj in objs)
             {
-                if (obj.tag != "Untagged")
+                if (obj.tag == "Sphere" || obj.tag == "Cube" || obj.tag == "Pyramid" || obj.tag == "Slope" || obj.tag == "Cylinder")
                 {
                     Rigidbody rb = obj.GetComponent<Rigidbody>();
                     if (rb)
@@ -152,46 +157,9 @@ public class Model : MonoBehaviour
         public override void DecreaseGameObjectSize(GameObject obj) { }
         public override void TurnObject(GameObject obj) { }
         public override void FlipObject(GameObject obj) { }
+        public override void TurnOnPhysics() { }
+        public override void TurnOffPhysics() { }
     }
-
-/*    public class RotateMode : Mode
-    {
-        public enum Direction { x, y, z };
-
-        private GameObject FocusedObject;
-        private Direction Axis;
-
-        public RotateMode(GameObject focusedObject, Direction axis)
-        {
-            FocusedObject = focusedObject;
-            Axis = axis;
-        }
-
-        public override void Update()
-        {
-            switch (Axis)
-            {
-                case Direction.x:
-                    FocusedObject.transform.Rotate(60 * Time.deltaTime, 0, 0);
-                    break;
-
-                case Direction.y:
-                    FocusedObject.transform.Rotate(0, 60 * Time.deltaTime, 0);
-                    break;
-
-                case Direction.z:
-                    FocusedObject.transform.Rotate(0, 0, 60 * Time.deltaTime);
-                    break;
-            }
-        }
-
-        public override void CreateGameObject(GameObject obj) { }
-        public override void DeleteGameObject(GameObject obj) { }
-        public override void DeleteAll(string tag) { }
-        public override void ChangeGameObjectColor(GameObject obj, Color color) { }
-        public override void IncreaseGameObjectSize(GameObject obj) { }
-        public override void DecreaseGameObjectSize(GameObject obj) { }
-    }*/
 
     public Mode mode;
 
@@ -335,39 +303,29 @@ public class Model : MonoBehaviour
             mode = new DragMode(focusedObject);
         }
     }
-    /*
-    public void ChangeToRotateModeX(GameObject focusedObject)
-    {
-        if (mode is StaticMode && (focusedObject != null))
-        {
-            mode = new RotateMode(focusedObject, RotateMode.Direction.x);
-        }
-    }
-
-    public void ChangeToRotateModeY(GameObject focusedObject)
-    {
-        if (mode is StaticMode && (focusedObject != null))
-        {
-            mode = new RotateMode(focusedObject, RotateMode.Direction.y);
-        }
-    }
-
-    public void ChangeToRotateModeZ(GameObject focusedObject)
-    {
-        if (mode is StaticMode && (focusedObject != null))
-        {
-            mode = new RotateMode(focusedObject, RotateMode.Direction.z);
-        }
-    }*/
 
     public void ToggleStaticAndDragMode(GameObject focusedObject)
     {
-        if (mode is StaticMode && (focusedObject != null))
+        if (mode is StaticMode && focusedObject.tag != "MainCamera" && focusedObject.tag != "Untagged")
         {
+            if (Mode.gravityOn)
+            {
+                Rigidbody rb = focusedObject.GetComponent<Rigidbody>();
+                if (rb)
+                {
+                    rb.velocity = Vector3.zero;
+                    Destroy(rb);
+                }
+            }
             mode = new DragMode(focusedObject);
         }
         else if (mode is DragMode)
         {
+            if (Mode.gravityOn)
+            {
+                Rigidbody rb = focusedObject.AddComponent<Rigidbody>();
+                rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            }
             mode = new StaticMode();
         }
     }
