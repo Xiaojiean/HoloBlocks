@@ -18,7 +18,22 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnCreateCube");
         });
 
+        keywords.Add("Make box", () =>
+        {
+            this.BroadcastMessage("OnCreateCube");
+        });
+
+        keywords.Add("Make square", () =>
+        {
+            this.BroadcastMessage("OnCreateCube");
+        });
+
         keywords.Add("Make ball", () =>
+        {
+            this.BroadcastMessage("OnCreateSphere");
+        });
+
+        keywords.Add("Make circle", () =>
         {
             this.BroadcastMessage("OnCreateSphere");
         });
@@ -64,6 +79,31 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnChangeColorToWhite", CanvasGazeGestureController.FocusedObject);
         });
 
+        keywords.Add("Make red", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToRed", CanvasGazeGestureController.FocusedObject);
+        });
+
+        keywords.Add("Make blue", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToBlue", CanvasGazeGestureController.FocusedObject);
+        });
+
+        keywords.Add("Make green", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToGreen", CanvasGazeGestureController.FocusedObject);
+        });
+
+        keywords.Add("Make yellow", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToYellow", CanvasGazeGestureController.FocusedObject);
+        });
+
+        keywords.Add("Make white", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToWhite", CanvasGazeGestureController.FocusedObject);
+        });
+
         // Resize Commands
         keywords.Add("Bigger", () =>
         {
@@ -71,6 +111,16 @@ public class VoiceController : MonoBehaviour
         });
 
         keywords.Add("Smaller", () =>
+        {
+            this.BroadcastMessage("OnDecreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
+        });
+
+        keywords.Add("Make bigger", () =>
+        {
+            this.BroadcastMessage("OnIncreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
+        });
+
+        keywords.Add("Make smaller", () =>
         {
             this.BroadcastMessage("OnDecreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
         });
@@ -143,12 +193,6 @@ public class VoiceController : MonoBehaviour
         keywords.Add("Gravity off", () =>
         {
             this.BroadcastMessage("TurnOffPhysics");
-        });
-
-        // Menu Command
-        keywords.Add("Start menu", () =>
-        {
-            SceneManager.LoadScene("StartMenu");
         });
 
         // Tell the KeywordRecognizer about our keywords.
