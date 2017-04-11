@@ -30,7 +30,7 @@ public class Model : MonoBehaviour
 
             if (PhysicsOn)
             {
-                TurnOnPhysicsForObject(newObject);
+                AddRigidBody(newObject);
             }
         }
 
@@ -150,7 +150,7 @@ public class Model : MonoBehaviour
             GameObject[] objs = UnityEngine.Object.FindObjectsOfType<GameObject>();
             foreach (GameObject obj in objs)
             {
-                TurnOnPhysicsForObject(obj);
+                AddRigidBody(obj);
             }
         }
 
@@ -167,13 +167,13 @@ public class Model : MonoBehaviour
             GameObject[] objs = UnityEngine.Object.FindObjectsOfType<GameObject>();
             foreach (GameObject obj in objs)
             {
-                TurnOffPhysicsForObject(obj);
+                RemoveRigidBody(obj);
             }
         }
 
         /* Turn on physics for the designated object, if it is a prefab.
          * Should only be called when physics is on. */
-        protected void TurnOnPhysicsForObject(GameObject obj)
+        protected void AddRigidBody(GameObject obj)
         {
             Debug.Assert(PhysicsOn == true);
 
@@ -188,8 +188,8 @@ public class Model : MonoBehaviour
             }
         }
 
-        /* Turn off physics for the designated object, if it is a prefab. */
-        protected void TurnOffPhysicsForObject(GameObject obj)
+        /* Remove the rigid body from the designated object, if it is a prefab. */
+        protected void RemoveRigidBody(GameObject obj)
         {
             if (IsPrefab(obj))
             {
@@ -217,7 +217,7 @@ public class Model : MonoBehaviour
         {
             Debug.Assert(IsPrefab(focusedObject));
 
-            TurnOffPhysicsForObject(focusedObject);
+            RemoveRigidBody(focusedObject);
             FocusedObject = focusedObject;
 
             var headPosition = Camera.main.transform.position;
@@ -240,7 +240,7 @@ public class Model : MonoBehaviour
         {
             if (PhysicsOn)
             {
-                TurnOnPhysicsForObject(FocusedObject);
+                AddRigidBody(FocusedObject);
             }
         }
 
