@@ -111,17 +111,7 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnClearCanvas");
         });
 
-        // Spin Commands
-        /*       keywords.Add("Start spinning", () =>
-               {
-                   this.BroadcastMessage("ChangeToRotateModeY", CanvasGazeGestureController.FocusedObject);
-               });
-
-               keywords.Add("Stop spinning", () =>
-               {
-                   this.BroadcastMessage("ChangeToStaticMode");
-               });*/
-
+        // Spin commands
         keywords.Add("Turn", () =>
         {
             this.BroadcastMessage("OnTurnObject", CanvasGazeGestureController.FocusedObject);
@@ -130,6 +120,18 @@ public class VoiceController : MonoBehaviour
         keywords.Add("Flip", () =>
         {
             this.BroadcastMessage("OnFlipObject", CanvasGazeGestureController.FocusedObject);
+        });
+
+        // Copy Command
+        keywords.Add("Copy", () =>
+        {
+            this.BroadcastMessage("OnCopy", CanvasGazeGestureController.FocusedObject);
+        });
+
+        // Paste Command
+        keywords.Add("Paste", () =>
+        {
+            this.BroadcastMessage("OnPaste");
         });
 
         // Gravity Commands

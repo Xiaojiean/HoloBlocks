@@ -35,8 +35,13 @@ public class GazeGestureController : MonoBehaviour
         var headPosition = Camera.main.transform.position;
         var gazeDirection = Camera.main.transform.forward;
 
+        // Layer Mask that masks out the spatial mapping layer. This is to ensure that raycast
+        // doesn't hit the spatial mapping prefab.
+        int layerMask = 1 << LayerMask.NameToLayer("SpatialMapping");
+        layerMask = ~layerMask;
+
         RaycastHit hitInfo;
-        if (Physics.Raycast(headPosition, gazeDirection, out hitInfo))
+        if (Physics.Raycast(headPosition, gazeDirection, out hitInfo, Mathf.Infinity, layerMask))
         {
             // If the raycast hit a hologram, use that as the focused object.
             FocusedObject = hitInfo.collider.gameObject;

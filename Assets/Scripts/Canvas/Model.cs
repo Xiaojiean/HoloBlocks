@@ -278,7 +278,7 @@ public class Model : MonoBehaviour
     }
 
     /* Mode of Model */
-    public Mode mode;
+    private Mode mode;
 
     /* Prefabs. */
     public GameObject Cube;
@@ -287,10 +287,13 @@ public class Model : MonoBehaviour
     public GameObject Pyramid;
     public GameObject Slope;
 
+    private GameObject ClipBoard;
+
     /* Used for initialization. */
     void Start()
     {
         mode = new Mode();
+        ClipBoard = null;
     }
 
     /* Called once per frame. */
@@ -411,6 +414,26 @@ public class Model : MonoBehaviour
         mode.FlipObject(focusedObject);
     }
 
+    // TODO: discuss the intuitiveness of this command.
+    // i.e. what should happen when the user says copy while not looking at a prefab?
+    // TODO: does these commands work very well?
+    public void OnCopy(GameObject focusedObject)
+    {
+        if (IsPrefab(focusedObject))
+        {
+            ClipBoard = focusedObject;
+        }
+    }
+
+    // TODO: Currently, paste works only when the original copied object
+    // still exists, which is a bit counter-intuitive.
+    // However, Unity does not offer an easy way to copy a GameObject without
+    // showing it on the screen. What should we do?
+    public void OnPaste()
+    {
+        mode.CreateGameObject(ClipBoard);
+    }
+
     public void ToggleMode(GameObject focusedObject)
     {
         mode.CleanUp();
@@ -438,8 +461,6 @@ public class Model : MonoBehaviour
     {
         mode.TurnOffPhysics();
     }
-
-    // TODO: Copy and Paste commands
 
     //================================================================================
 }
