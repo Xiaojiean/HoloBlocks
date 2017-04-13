@@ -12,7 +12,7 @@ public class VoiceController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // Creation Commands
+        // Create a cube
         keywords.Add("Make block", () =>
         {
             this.BroadcastMessage("OnCreateCube");
@@ -28,6 +28,7 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnCreateCube");
         });
 
+        // Create a sphere
         keywords.Add("Make ball", () =>
         {
             this.BroadcastMessage("OnCreateSphere");
@@ -38,45 +39,48 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnCreateSphere");
         });
 
+        keywords.Add("Make sphere", () =>
+        {
+            this.BroadcastMessage("OnCreateSphere");
+        });
+
+        // Create a cylinder
         keywords.Add("Make tube", () =>
         {
             this.BroadcastMessage("OnCreateCylinder");
         });
 
+        keywords.Add("Make cylinder", () =>
+        {
+            this.BroadcastMessage("OnCreateCylinder");
+        });
+
+        // Create a pyramid
         keywords.Add("Make triangle", () =>
         {
             this.BroadcastMessage("OnCreatePyramid");
         });
 
+        keywords.Add("Make pyramid", () =>
+        {
+            this.BroadcastMessage("OnCreatePyramid");
+        });
+
+        // Create a slope
         keywords.Add("Make ramp", () =>
         {
             this.BroadcastMessage("OnCreateSlope");
         });
 
-        // Color Commands
+        keywords.Add("Make slope", () =>
+        {
+            this.BroadcastMessage("OnCreateSlope");
+        });
+
+        // Change color to red
         keywords.Add("Color red", () =>
         {
             this.BroadcastMessage("OnChangeColorToRed", CanvasGazeGestureController.FocusedObject);
-        });
-
-        keywords.Add("Color blue", () =>
-        {
-            this.BroadcastMessage("OnChangeColorToBlue", CanvasGazeGestureController.FocusedObject);
-        });
-
-        keywords.Add("Color green", () =>
-        {
-            this.BroadcastMessage("OnChangeColorToGreen", CanvasGazeGestureController.FocusedObject);
-        });
-
-        keywords.Add("Color yellow", () =>
-        {
-            this.BroadcastMessage("OnChangeColorToYellow", CanvasGazeGestureController.FocusedObject);
-        });
-
-        keywords.Add("Color white", () =>
-        {
-            this.BroadcastMessage("OnChangeColorToWhite", CanvasGazeGestureController.FocusedObject);
         });
 
         keywords.Add("Make red", () =>
@@ -84,9 +88,21 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnChangeColorToRed", CanvasGazeGestureController.FocusedObject);
         });
 
+        // Change color to blue
+        keywords.Add("Color blue", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToBlue", CanvasGazeGestureController.FocusedObject);
+        });
+
         keywords.Add("Make blue", () =>
         {
             this.BroadcastMessage("OnChangeColorToBlue", CanvasGazeGestureController.FocusedObject);
+        });
+
+        // Change color to green
+        keywords.Add("Color green", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToGreen", CanvasGazeGestureController.FocusedObject);
         });
 
         keywords.Add("Make green", () =>
@@ -94,9 +110,21 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnChangeColorToGreen", CanvasGazeGestureController.FocusedObject);
         });
 
+        // Change color to yellow
+        keywords.Add("Color yellow", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToYellow", CanvasGazeGestureController.FocusedObject);
+        });
+
         keywords.Add("Make yellow", () =>
         {
             this.BroadcastMessage("OnChangeColorToYellow", CanvasGazeGestureController.FocusedObject);
+        });
+
+        // Change color to white
+        keywords.Add("Color white", () =>
+        {
+            this.BroadcastMessage("OnChangeColorToWhite", CanvasGazeGestureController.FocusedObject);
         });
 
         keywords.Add("Make white", () =>
@@ -104,15 +132,10 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnChangeColorToWhite", CanvasGazeGestureController.FocusedObject);
         });
 
-        // Resize Commands
+        // Increase size
         keywords.Add("Bigger", () =>
         {
             this.BroadcastMessage("OnIncreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
-        });
-
-        keywords.Add("Smaller", () =>
-        {
-            this.BroadcastMessage("OnDecreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
         });
 
         keywords.Add("Make bigger", () =>
@@ -120,76 +143,60 @@ public class VoiceController : MonoBehaviour
             this.BroadcastMessage("OnIncreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
         });
 
+        // Decrease size
+        keywords.Add("Smaller", () =>
+        {
+            this.BroadcastMessage("OnDecreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
+        });
+
         keywords.Add("Make smaller", () =>
         {
             this.BroadcastMessage("OnDecreaseGameObjectSize", CanvasGazeGestureController.FocusedObject);
         });
 
-        // Deletion Commands
+        // Delete focused object
         keywords.Add("Erase", () =>
         {
             this.BroadcastMessage("OnDelete", CanvasGazeGestureController.FocusedObject);
         });
 
-        keywords.Add("Erase blocks", () =>
-        {
-            this.BroadcastMessage("OnDeleteAllCubes");
-        });
-
-        keywords.Add("Erase balls", () =>
-        {
-            this.BroadcastMessage("OnDeleteAllSpheres");
-        });
-
-        keywords.Add("Erase ramps", () =>
-        {
-            this.BroadcastMessage("OnDeleteAllSlopes");
-        });
-
-        keywords.Add("Erase triangles", () =>
-        {
-            this.BroadcastMessage("OnDeleteAllPyramids");
-        });
-
-        keywords.Add("Erase tubes", () =>
-        {
-            this.BroadcastMessage("OnDeleteAllCylinders");
-        });
-
+        // Delete all objects
         keywords.Add("Erase all", () =>
         {
             this.BroadcastMessage("OnClearCanvas");
         });
 
-        // Spin commands
+        // Rotate the focused object around the y axis clockwise by 45 degrees.
         keywords.Add("Turn", () =>
         {
             this.BroadcastMessage("OnTurnObject", CanvasGazeGestureController.FocusedObject);
         });
 
+        // Rotate the focused object around the z axis clockwise by 45 degrees.
         keywords.Add("Flip", () =>
         {
             this.BroadcastMessage("OnFlipObject", CanvasGazeGestureController.FocusedObject);
         });
 
-        // Copy Command
-        keywords.Add("Copy", () =>
+        // Copy focused object
+        keywords.Add("Clone", () =>
         {
             this.BroadcastMessage("OnCopy", CanvasGazeGestureController.FocusedObject);
         });
 
-        // Paste Command
+        // Paste
         keywords.Add("Paste", () =>
         {
             this.BroadcastMessage("OnPaste");
         });
 
-        // Gravity Commands
+        // Turn physics on
         keywords.Add("Gravity on", () =>
         {
             this.BroadcastMessage("TurnOnPhysics");
         });
-
+        
+        // Turn physics off
         keywords.Add("Gravity off", () =>
         {
             this.BroadcastMessage("TurnOffPhysics");

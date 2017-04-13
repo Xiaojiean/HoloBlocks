@@ -7,13 +7,21 @@ public class Model : MonoBehaviour
     /* Class that defines the behavior of Model while not in DragMode. */
     public class Mode
     {
+        /* Magic numbers */
+        private float CreationDistance = 1.5F;
+        private float MinScale = 0.05F;
+        private float MaxScale = 0.3F;
+        private float SizeIncrement = 0.05F;
+
+        /* Whether physics is on or not */
+        protected static bool PhysicsOn = false;
+
         /* This function is called once per frame. */
         public virtual void Update() { }
 
         /* Code that need to be executed before the object is destroyed by the garbage collector. */
         public virtual void CleanUp() { }
 
-        // TODO: Tweak object size and location upon creation.
         /* Create a new GameObject with the same properties as obj.
          * Does nothing is obj is not a prefab object. */
         public virtual void CreateGameObject(GameObject obj)
@@ -26,7 +34,7 @@ public class Model : MonoBehaviour
             var headPosition = Camera.main.transform.position;
             var gazeDirection = Camera.main.transform.forward;
 
-            GameObject newObject = Instantiate(obj, headPosition + gazeDirection, obj.transform.rotation);
+            GameObject newObject = Instantiate(obj, headPosition + CreationDistance * gazeDirection, obj.transform.rotation);
 
             if (PhysicsOn)
             {
@@ -70,9 +78,6 @@ public class Model : MonoBehaviour
             obj.GetComponent<Renderer>().material.color = color;
         }
 
-
-        // TODO: Get rid of these magic numbers.
-        // TODO: Increase the largest possible size.
         /* Increase the size of obj by an increment.
          * Does nothing if obj is not a prefab. */
         public virtual void IncreaseGameObjectSize(GameObject obj)
@@ -82,11 +87,11 @@ public class Model : MonoBehaviour
                 return;
             }
 
-            if (obj.transform.localScale.x < 0.175F &&
-                obj.transform.localScale.y < 0.175F &&
-                obj.transform.localScale.z < 0.175F)
+            if (obj.transform.localScale.x < MaxScale - (SizeIncrement / 2) &&
+                obj.transform.localScale.y < MaxScale - (SizeIncrement / 2) &&
+                obj.transform.localScale.z < MaxScale - (SizeIncrement / 2))
             {
-                obj.transform.localScale += new Vector3(0.05F, 0.05F, 0.05F);
+                obj.transform.localScale += new Vector3(SizeIncrement, SizeIncrement, SizeIncrement);
             }
         }
 
@@ -99,15 +104,16 @@ public class Model : MonoBehaviour
                 return;
             }
 
-            if (obj.transform.localScale.x > 0.075F &&
-                obj.transform.localScale.y > 0.075F &&
-                obj.transform.localScale.z > 0.075F)
+            if (obj.transform.localScale.x > MinScale + (SizeIncrement /2) &&
+                obj.transform.localScale.y > MinScale + (SizeIncrement / 2) &&
+                obj.transform.localScale.z > MinScale + (SizeIncrement / 2))
             {
-                obj.transform.localScale -= new Vector3(0.05F, 0.05F, 0.05F);
+                obj.transform.localScale -= new Vector3(SizeIncrement, SizeIncrement, SizeIncrement);
             }
         }
 
         // TODO: 90 degrees or 45 degrees?
+        // TODO: Get rid of these magic numbers.
         /* Rotate obj around the y axis clockwise by 45 degrees.
          * Does nothing is obj is not a prefab. */
         public virtual void TurnObject(GameObject obj)
@@ -133,9 +139,6 @@ public class Model : MonoBehaviour
             float offBy = currentRotation % 90;
             obj.transform.Rotate(0, 0, 90 - offBy);
         }
-
-        /* Whether physics is on or not */
-        protected static bool PhysicsOn = false;
 
         /* Turn on physics for all prefabs. */
         public virtual void TurnOnPhysics()
@@ -302,7 +305,6 @@ public class Model : MonoBehaviour
         mode.Update();
     }
 
-
     /* Functions implementing voice commands */
     //================================================================================
 
@@ -334,31 +336,6 @@ public class Model : MonoBehaviour
     public void OnDelete(GameObject focusedObject)
     {
         mode.DeleteGameObject(focusedObject);
-    }
-
-    public void OnDeleteAllCubes()
-    {
-        mode.DeleteAll("Cube");
-    }
-
-    public void OnDeleteAllSpheres()
-    {
-        mode.DeleteAll("Sphere");
-    }
-
-    public void OnDeleteAllCylinders()
-    {
-        mode.DeleteAll("Cylinder");
-    }
-
-    public void OnDeleteAllPyramids()
-    {
-        mode.DeleteAll("Pyramid");
-    }
-
-    public void OnDeleteAllSlopes()
-    {
-        mode.DeleteAll("Slope");
     }
 
     public void OnClearCanvas()
