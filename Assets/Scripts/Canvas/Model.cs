@@ -183,11 +183,10 @@ public class Model : MonoBehaviour
         protected void AddRigidBody(GameObject obj)
         {
             Debug.Assert(PhysicsOn == true);
-
             if (IsPrefab(obj))
             {
                 Rigidbody rb = obj.GetComponent<Rigidbody>();
-                if (rb = null)
+                if (rb == null)
                 {
                     rb = obj.AddComponent<Rigidbody>();
                     rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
@@ -337,6 +336,11 @@ public class Model : MonoBehaviour
     /* Called once per frame. */
     void Update()
     {
+        /* Make sure that Model is always at the same position as the
+         * user's head. This ensures that CopyNoise always sounds like
+         * it is being played at the same place. */
+        transform.position = Camera.main.transform.position;
+
         mode.Update();
     }
 
