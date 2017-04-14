@@ -179,7 +179,7 @@ public class VoiceController : MonoBehaviour
         });
 
         // Copy focused object
-        keywords.Add("Clone", () =>
+        keywords.Add("Copy", () =>
         {
             this.BroadcastMessage("OnCopy", CanvasGazeGestureController.FocusedObject);
         });

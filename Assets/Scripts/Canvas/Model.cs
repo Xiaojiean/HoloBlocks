@@ -23,12 +23,14 @@ public class Model : MonoBehaviour
         public virtual void CleanUp() { }
 
         /* Create a new GameObject with the same properties as obj.
-         * Does nothing is obj is not a prefab object. */
-        public virtual void CreateGameObject(GameObject obj)
+         * Does nothing if obj is not a prefab object.
+         * Returns the newly creaed GameObject upon success.
+         * Returns null upon failure. */
+        public virtual GameObject CreateGameObject(GameObject obj)
         {
             if (!IsPrefab(obj))
             {
-                return;
+                return null;
             }
 
             var headPosition = Camera.main.transform.position;
@@ -40,6 +42,8 @@ public class Model : MonoBehaviour
             {
                 AddRigidBody(newObject);
             }
+
+            return newObject;
         }
 
         /* Delete obj. Does nothing if obj is not a prefab object. */
@@ -183,7 +187,7 @@ public class Model : MonoBehaviour
             if (IsPrefab(obj))
             {
                 Rigidbody rb = obj.GetComponent<Rigidbody>();
-                if (!rb)
+                if (rb = null)
                 {
                     rb = obj.AddComponent<Rigidbody>();
                     rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
@@ -197,7 +201,7 @@ public class Model : MonoBehaviour
             if (IsPrefab(obj))
             {
                 Rigidbody rb = obj.GetComponent<Rigidbody>();
-                if (rb)
+                if (rb != null)
                 {
                     rb.velocity = Vector3.zero;
                     Destroy(rb);
@@ -248,7 +252,7 @@ public class Model : MonoBehaviour
         }
 
         /* Disable the following functionalities. */
-        public override void CreateGameObject(GameObject obj) { }
+        public override GameObject CreateGameObject(GameObject obj) { return null;  }
         public override void DeleteGameObject(GameObject obj) { }
         public override void DeleteAll(string tag) { }
         public override void ChangeGameObjectColor(GameObject obj, Color color) { }
@@ -260,19 +264,36 @@ public class Model : MonoBehaviour
         public override void TurnOffPhysics() { }
     }
 
+    /* Class for storing information regarding the copied object */
+    private class ClipBoard
+    {
+        public string tag;
+        public Vector3 scale;
+        public Quaternion rotation;
+        public Color color;
+
+        public ClipBoard(GameObject obj)
+        {
+            tag = obj.tag;
+            scale = obj.transform.localScale;
+            rotation = obj.transform.rotation;
+            color = obj.GetComponent<Renderer>().material.color;
+        }
+    }
+
     /* List of valid tags for Prefab objects. */
     static private HashSet<string> PrefabTags = new HashSet<string> { "Sphere", "Cube", "Cylinder", "Pyramid", "Slope" };
 
     /* Helper function for determining whether a tag is a valid prefab tag. */
-    static public bool IsPrefabTag(string tag)
+    static private bool IsPrefabTag(string tag)
     {
         return PrefabTags.Contains(tag);
     }
 
     /* Helper function for determining whether a GameObject is a prefab */
-    static public bool IsPrefab(GameObject obj)
+    static private bool IsPrefab(GameObject obj)
     {
-        if (!obj)
+        if (obj == null)
         {
             return false;
         }
@@ -290,13 +311,27 @@ public class Model : MonoBehaviour
     public GameObject Pyramid;
     public GameObject Slope;
 
-    private GameObject ClipBoard;
+    /* Audios */
+    public AudioClip CopyNoise;
+    private AudioSource AudioPlayer;
+
+    /* Clipboard */
+    private ClipBoard CopiedObject;
 
     /* Used for initialization. */
     void Start()
     {
         mode = new Mode();
-        ClipBoard = null;
+        CopiedObject = null;
+
+        AudioPlayer = gameObject.AddComponent<AudioSource>();
+        AudioPlayer.playOnAwake = false;
+        AudioPlayer.spatialize = true;
+        AudioPlayer.spatialBlend = 1.0f;
+        AudioPlayer.dopplerLevel = 0.0f;
+        AudioPlayer.rolloffMode = AudioRolloffMode.Logarithmic;
+        AudioPlayer.maxDistance = 20f;
+        AudioPlayer.clip = CopyNoise;
     }
 
     /* Called once per frame. */
@@ -391,24 +426,54 @@ public class Model : MonoBehaviour
         mode.FlipObject(focusedObject);
     }
 
-    // TODO: discuss the intuitiveness of this command.
-    // i.e. what should happen when the user says copy while not looking at a prefab?
-    // TODO: does these commands work very well?
     public void OnCopy(GameObject focusedObject)
     {
         if (IsPrefab(focusedObject))
         {
-            ClipBoard = focusedObject;
+            CopiedObject = new ClipBoard(focusedObject);
+            AudioPlayer.Play();
         }
     }
 
-    // TODO: Currently, paste works only when the original copied object
-    // still exists, which is a bit counter-intuitive.
-    // However, Unity does not offer an easy way to copy a GameObject without
-    // showing it on the screen. What should we do?
     public void OnPaste()
     {
-        mode.CreateGameObject(ClipBoard);
+        if (CopiedObject == null)
+        {
+            return;
+        }
+
+        GameObject obj = null;
+        switch (CopiedObject.tag)
+        {
+            case "Cube":
+                obj = mode.CreateGameObject(Cube);
+                break;
+
+            case "Sphere":
+                obj = mode.CreateGameObject(Sphere);
+                break;
+
+            case "Cylinder":
+                obj = mode.CreateGameObject(Cylinder);
+                break;
+
+            case "Pyramid":
+                obj = mode.CreateGameObject(Pyramid);
+                break;
+
+            case "Slope":
+                obj = mode.CreateGameObject(Slope);
+                break;
+        }
+
+        if (obj == null)
+        {
+            return;
+        }
+
+        obj.transform.localScale = CopiedObject.scale;
+        obj.transform.rotation = CopiedObject.rotation;
+        obj.GetComponent<Renderer>().material.color = CopiedObject.color;
     }
 
     public void ToggleMode(GameObject focusedObject)
@@ -421,7 +486,7 @@ public class Model : MonoBehaviour
         }
         else
         {
-            if (!focusedObject)
+            if (focusedObject == null)
             {
                 return;
             }
