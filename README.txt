@@ -54,17 +54,6 @@ Instructions on building the project:
 
 How to use the App:
 
-1. Upon launch, the app will show a start menu. Click on the start button.
-
-2. After clicking on the start button, you will be able to use the following voice commands:
-	(1) "Create sphere" will create a sphere about one meter away from you in the direction you are looking at.
-	(2) "Create cube" will create a cube about one meter away from you in the direction you are looking at.
-	(3) "Delete all spheres" will delete all spheres from your workspace.
-	(4) "Delete all cubes" will delete all cubes from your workspace.
-	(5) "Clear canvas" will delete all objects from your workspace.
-	(6) "Start menu" will delete all objects from your workspace and take you back to the start menu.
-
-3. In addition, you can click on any object to pick it up and move it around using your gaze.
-   You can let go of the object by clicking a second time.
+Please refer to the product pamphlet for instructions on how to use the app.
 
 ################################################################################
