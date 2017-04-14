@@ -25,7 +25,7 @@ public class Model : MonoBehaviour
 
         /* Create a new GameObject with the same properties as obj.
          * Does nothing if obj is not a prefab object.
-         * Returns the newly creaed GameObject upon success.
+         * Returns the newly created GameObject upon success.
          * Returns null upon failure. */
         public virtual GameObject CreateGameObject(GameObject obj)
         {
@@ -118,7 +118,7 @@ public class Model : MonoBehaviour
         }
         
         /* Rotate obj around the y axis clockwise by 45 degrees.
-         * Does nothing is obj is not a prefab. */
+         * Does nothing if obj is not a prefab. */
         public virtual void RotateY(GameObject obj)
         {
             if (!IsPrefab(obj))
@@ -140,7 +140,7 @@ public class Model : MonoBehaviour
         }
 
         /* Rotate obj around the z axis clockwise by 45 degrees.
-         * Does nothing is obj is not a prefab. */
+         * Does nothing if obj is not a prefab. */
         public virtual void RotateZ(GameObject obj)
         {
             if (!IsPrefab(obj))
@@ -195,7 +195,7 @@ public class Model : MonoBehaviour
             }
         }
 
-        /* Turn on physics for the designated object, if it is a prefab.
+        /* Add a RigidBody to the designated object, if it is a prefab.
          * Should only be called when physics is on. */
         protected void AddRigidBody(GameObject obj)
         {
@@ -211,7 +211,7 @@ public class Model : MonoBehaviour
             }
         }
 
-        /* Remove the rigid body from the designated object, if it is a prefab. */
+        /* Remove the RigidBody from the designated object, if it is a prefab. */
         protected void RemoveRigidBody(GameObject obj)
         {
             if (IsPrefab(obj))
@@ -306,7 +306,7 @@ public class Model : MonoBehaviour
         return PrefabTags.Contains(tag);
     }
 
-    /* Helper function for determining whether a GameObject is a prefab */
+    /* Helper function for determining whether a GameObject is a prefab. */
     static private bool IsPrefab(GameObject obj)
     {
         if (obj == null)
@@ -320,7 +320,7 @@ public class Model : MonoBehaviour
     /* Mode of Model */
     private Mode mode;
 
-    /* Prefabs. */
+    /* Prefabs */
     public GameObject Cube;
     public GameObject Sphere;
     public GameObject Cylinder;

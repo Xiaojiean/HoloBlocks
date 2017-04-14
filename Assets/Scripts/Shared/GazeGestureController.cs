@@ -15,7 +15,7 @@ public class GazeGestureController : MonoBehaviour
         recognizer = new GestureRecognizer();
         recognizer.TappedEvent += (source, tapCount, ray) =>
         {
-            // Send an OnSelect message to the focused object and its ancestors.
+            // Call OnTappedEvent when the user selects a hologram
             if (FocusedObject != null)
             {
                 OnTappedEvent();
