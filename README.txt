@@ -30,6 +30,8 @@ Instructions on building the project:
 	(4) In the Rendering section, check the Virtual Reality Supported checkbox to add
 	    a new Virtual Reality Devices list and confirm "Windows Holographic" is listed
 	    as a supported device.
+	(5) Expand the Publisher Settings group
+	(6) Make sure that Microphone and SpatialPerception are enabled under capabilities
 
 6. Export the Visual Studio solution:
 	(1) Return to the Build Settings window.
@@ -44,7 +46,7 @@ Instructions on building the project:
 
 7. Build and Deploy:
 	Refer to the instuctions in the following website to build and deploy onto the
-	HoloLens. Make sure to enable Microphones under Package.appxmanifest > Capabilites.
+	HoloLens.
 
 	https://developer.microsoft.com/en-us/windows/holographic/Using_Visual_Studio.html
 
