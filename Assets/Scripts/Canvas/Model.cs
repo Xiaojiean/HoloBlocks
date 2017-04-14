@@ -12,6 +12,7 @@ public class Model : MonoBehaviour
         private float MinScale = 0.05F;
         private float MaxScale = 0.3F;
         private float SizeIncrement = 0.05F;
+        private float RotationIncrement = 45;
 
         /* Whether physics is on or not */
         protected static bool PhysicsOn = false;
@@ -115,33 +116,49 @@ public class Model : MonoBehaviour
                 obj.transform.localScale -= new Vector3(SizeIncrement, SizeIncrement, SizeIncrement);
             }
         }
-
-        // TODO: 90 degrees or 45 degrees?
-        // TODO: Get rid of these magic numbers.
+        
         /* Rotate obj around the y axis clockwise by 45 degrees.
          * Does nothing is obj is not a prefab. */
-        public virtual void TurnObject(GameObject obj)
+        public virtual void RotateY(GameObject obj)
         {
             if (!IsPrefab(obj))
             {
                 return;
             }
 
-            obj.transform.rotation = Quaternion.AngleAxis(90, Vector3.up) * obj.transform.rotation;
+            Vector3 rotation = obj.transform.eulerAngles;
+            int nextPosition = (int) System.Math.Ceiling((double) rotation.y / RotationIncrement);
+
+            /* Deal with floating point errors. */
+            if (System.Math.Abs(nextPosition * RotationIncrement - rotation.y) < 0.001)
+            {
+                ++nextPosition;
+            }
+
+            rotation.y = nextPosition * RotationIncrement;
+            obj.transform.eulerAngles = rotation;
         }
 
         /* Rotate obj around the z axis clockwise by 45 degrees.
          * Does nothing is obj is not a prefab. */
-        public virtual void FlipObject(GameObject obj)
+        public virtual void RotateZ(GameObject obj)
         {
             if (!IsPrefab(obj))
             {
                 return;
             }
 
-            float currentRotation = obj.transform.localRotation.eulerAngles.z;
-            float offBy = currentRotation % 90;
-            obj.transform.Rotate(0, 0, 90 - offBy);
+            Vector3 rotation = obj.transform.eulerAngles;
+            int nextPosition = (int) System.Math.Ceiling((double) rotation.z / RotationIncrement);
+
+            /* Deal with floating point errors. */
+            if (System.Math.Abs(nextPosition * RotationIncrement - rotation.z) < 0.001)
+            {
+                ++nextPosition;
+            }
+
+            rotation.z = nextPosition * RotationIncrement;
+            obj.transform.eulerAngles = rotation;
         }
 
         /* Turn on physics for all prefabs. */
@@ -257,8 +274,8 @@ public class Model : MonoBehaviour
         public override void ChangeGameObjectColor(GameObject obj, Color color) { }
         public override void IncreaseGameObjectSize(GameObject obj) { }
         public override void DecreaseGameObjectSize(GameObject obj) { }
-        public override void TurnObject(GameObject obj) { }
-        public override void FlipObject(GameObject obj) { }
+        public override void RotateY(GameObject obj) { }
+        public override void RotateZ(GameObject obj) { }
         public override void TurnOnPhysics() { }
         public override void TurnOffPhysics() { }
     }
@@ -420,14 +437,14 @@ public class Model : MonoBehaviour
         mode.DecreaseGameObjectSize(focusedObject);
     }
 
-    public void OnTurnObject(GameObject focusedObject)
+    public void OnRotateY(GameObject focusedObject)
     {
-        mode.TurnObject(focusedObject);
+        mode.RotateY(focusedObject);
     }
 
-    public void OnFlipObject(GameObject focusedObject)
+    public void OnRotateZ(GameObject focusedObject)
     {
-        mode.FlipObject(focusedObject);
+        mode.RotateZ(focusedObject);
     }
 
     public void OnCopy(GameObject focusedObject)

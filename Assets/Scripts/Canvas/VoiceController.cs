@@ -169,13 +169,13 @@ public class VoiceController : MonoBehaviour
         // Rotate the focused object around the y axis clockwise by 45 degrees.
         keywords.Add("Turn", () =>
         {
-            this.BroadcastMessage("OnTurnObject", CanvasGazeGestureController.FocusedObject);
+            this.BroadcastMessage("OnRotateY", CanvasGazeGestureController.FocusedObject);
         });
 
         // Rotate the focused object around the z axis clockwise by 45 degrees.
         keywords.Add("Flip", () =>
         {
-            this.BroadcastMessage("OnFlipObject", CanvasGazeGestureController.FocusedObject);
+            this.BroadcastMessage("OnRotateZ", CanvasGazeGestureController.FocusedObject);
         });
 
         // Copy focused object
